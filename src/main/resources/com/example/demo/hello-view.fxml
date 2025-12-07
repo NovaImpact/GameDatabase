@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+
+    <!-- ==================== TOP: HEADER ==================== -->
+    <top>
+        <VBox spacing="12" style="-fx-background-color: #404040; -fx-padding: 20;">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-size: 36px;" />
+                <VBox spacing="3">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Video Game Data Editor" />
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #16c79a; -fx-font-style: italic;" text="Manage your best-selling video games database" />
+                </VBox>
+            </HBox>
+
+            <Separator style="-fx-background-color: #16c79a;" />
+
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-size: 14px; -fx-text-fill: white; -fx-font-weight: bold;" text="View:" />
+                <ComboBox fx:id="filterComboBox" prefWidth="180" style="-fx-font-size: 13px;" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label style="-fx-font-size: 13px; -fx-text-fill: #95a5a6;" text="Total Games: " />
+                <Label style="-fx-font-size: 13px; -fx-text-fill: #16c79a; -fx-font-weight: bold;" text="Loading..." />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ==================== CENTER: MAIN CONTENT ==================== -->
+    <center>
+        <SplitPane dividerPositions="0.42" style="-fx-background-color: #ecf0f1;">
+
+            <!-- ==================== LEFT: TABLE ==================== -->
+            <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: #d9d5d4;">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Games Library" />
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <TableView fx:id="gameTable" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="rankColumn" prefWidth="70" style="-fx-alignment: CENTER;" text="Rank" />
+                        <TableColumn fx:id="titleColumn" prefWidth="280" text="Game Title" />
+                        <TableColumn fx:id="salesColumn" prefWidth="100" style="-fx-alignment: CENTER;" text="Sales" />
+                        <TableColumn fx:id="releaseDateColumn" prefWidth="120" style="-fx-alignment: CENTER;" text="Release Date" />
+                        <TableColumn fx:id="typeColumn" prefWidth="120" style="-fx-alignment: CENTER;" text="Data Type" />
+                    </columns>
+                    <placeholder>
+                        <Label style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;" text="No games available. Please load data." />
+                    </placeholder>
+                </TableView>
+
+                <HBox alignment="CENTER" spacing="12">
+                    <Button fx:id="previousButton" onAction="#handlePrevious" prefHeight="35" prefWidth="130" style="-fx-background-color: #16c79a; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;" text="◀ Previous" />
+                    <Button fx:id="nextButton" onAction="#handleNext" prefHeight="35" prefWidth="130" style="-fx-background-color: #16c79a; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;" text="Next ▶" />
+                </HBox>
+            </VBox>
+
+            <!-- ==================== RIGHT: DETAILS ==================== -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: #ecf0f1; -fx-background: #ecf0f1;">
+                <VBox spacing="15" style="-fx-padding: 15; -fx-background-color: #f5f0f0;">
+
+                    <!-- ==================== COVER ART ==================== -->
+                    <VBox alignment="CENTER" spacing="12" style="-fx-background-color: white; -fx-border-color: #16c79a; -fx-border-width: 3; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Game Cover Art" />
+
+                        <StackPane style="-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-border-color: #dee2e6; -fx-border-width: 2;">
+                            <ImageView fx:id="gameImageView" fitHeight="350" fitWidth="250" preserveRatio="true" />
+                        </StackPane>
+
+                        <HBox alignment="CENTER" spacing="12">
+                            <Button fx:id="addImageButton" onAction="#handleAddImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="📁 Add Image" />
+                            <Button fx:id="removeImageButton" disable="true" onAction="#handleRemoveImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="🗑 Remove" />
+                        </HBox>
+                    </VBox>
+
+                          <!-- ==================== BASIC INFO ==================== -->
+                    <VBox prefWidth="764.0" spacing="12" style="-fx-background-color: white; -fx-border-color: #3498db; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Basic Information" />
+
+                              <Label fx:id="typeLabel" style="-fx-font-size: 13px; -fx-font-style: italic; -fx-text-fill: #7f8c8d;" text="Type: Not Selected" />
+
+                              <Separator />
+
+                              <GridPane hgap="12" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="130" prefWidth="130" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="250" prefWidth="250" />
+                            </columnConstraints>
+
+                                  <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Rank:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="rankField" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                  <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="titleField" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                  <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Sales (Millions):" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="salesField" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                  <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Release Date:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <DatePicker fx:id="releaseDatePicker" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- ==================== GAMECOPIES FIELDS ==================== -->
+                    <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #9b59b6; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="💿 Sales Data (GameCopies)" />
+
+                        <Separator />
+
+                        <GridPane hgap="12" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="130" prefWidth="130" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="250" prefWidth="250" />
+                            </columnConstraints>
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Series:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="seriesField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Platforms:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="platformsField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Release Year:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="releaseYearField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Developer:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <TextField fx:id="developerField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Publisher:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                            <TextField fx:id="publisherField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- ==================== GAMERATING FIELDS ==================== -->
+                    <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #e67e22; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="⭐ Rating Data (GameRating)" />
+
+                        <Separator />
+
+                        <GridPane hgap="12" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="130" prefWidth="130" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="250" prefWidth="250" />
+                            </columnConstraints>
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Rating:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="ratingField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Metascore:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="metascoreField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Dev/Publisher:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="devPublisherField" disable="true" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- ==================== DETAILS DISPLAY ==================== -->
+                    <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #34495e; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="📝 Complete Details" />
+
+                        <Separator />
+
+                        <TextArea fx:id="detailsArea" editable="false" prefHeight="140" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-background-color: #f8f9fa;" wrapText="true" />
+                    </VBox>
+
+                    <!-- ==================== ACTION BUTTONS ==================== -->
+                    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 15 0 10 0;">
+                        <Button fx:id="saveButton" onAction="#handleSave" prefHeight="45" prefWidth="180" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" text="💾 Save Changes" />
+
+                        <Button fx:id="deleteButton" onAction="#handleDelete" prefHeight="45" prefWidth="180" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" text="🗑 Delete Game" />
+                    </HBox>
+
+                </VBox>
+            </ScrollPane>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>
