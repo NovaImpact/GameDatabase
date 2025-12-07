@@ -15,7 +15,7 @@ import java.time.LocalDate;
  */
 public class HelloController {
 
-    // ==================== TABLE VIEW ====================
+
     @FXML private TableView<com.example.demo.Game> gameTable;
     @FXML private TableColumn<com.example.demo.Game, Integer> rankColumn;
     @FXML private TableColumn<com.example.demo.Game, String> titleColumn;
@@ -23,31 +23,27 @@ public class HelloController {
     @FXML private TableColumn<com.example.demo.Game, LocalDate> releaseDateColumn;
     @FXML private TableColumn<com.example.demo.Game, String> typeColumn;
 
-    // ==================== BASIC FIELDS ====================
     @FXML private TextField rankField;
     @FXML private TextField titleField;
     @FXML private TextField salesField;
     @FXML private DatePicker releaseDatePicker;
     @FXML private Label typeLabel;
 
-    // ==================== GAMECOPIES FIELDS ====================
     @FXML private TextField seriesField;
     @FXML private TextField platformsField;
     @FXML private TextField releaseYearField;
     @FXML private TextField developerField;
     @FXML private TextField publisherField;
 
-    // ==================== GAMERATING FIELDS ====================
     @FXML private TextField ratingField;
     @FXML private TextField metascoreField;
     @FXML private TextField devPublisherField;
 
-    // ==================== IMAGE SECTION ====================
+
     @FXML private ImageView gameImageView;
     @FXML private Button addImageButton;
     @FXML private Button removeImageButton;
 
-    // ==================== DETAILS & ACTIONS ====================
     @FXML private TextArea detailsArea;
     @FXML private Button previousButton;
     @FXML private Button nextButton;
@@ -57,9 +53,7 @@ public class HelloController {
 
     private com.example.demo.Game selectedGame;
 
-    /**
-     * Initialize the controller - called automatically by JavaFX
-     */
+
     @FXML
     public void initialize() {
         try {
@@ -67,7 +61,6 @@ public class HelloController {
             System.out.println("INITIALIZING GAME DATA EDITOR");
             System.out.println("=".repeat(50));
 
-            // Load all data
             GameCopies.readGameCopiesData();
             GameRating.readGameRatingData();
 
@@ -79,10 +72,8 @@ public class HelloController {
             setupTableSelectionListener();
             setupImageView();
 
-            // Load initial data
             applyFilter();
 
-            // Select first game if available
             if (!gameTable.getItems().isEmpty()) {
                 gameTable.getSelectionModel().select(0);
             }

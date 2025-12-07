@@ -10,13 +10,13 @@ public class Main {
             System.out.println("=".repeat(70));
             System.out.println();
 
-            // Load all data
+
             System.out.println("Loading data files...");
             GameCopies.readGameCopiesData();
             GameRating.readGameRatingData();
             System.out.println();
 
-            // Display summary
+
             System.out.println("=".repeat(70));
             System.out.println("DATA LOADING SUMMARY");
             System.out.println("=".repeat(70));
@@ -26,7 +26,7 @@ public class Main {
             System.out.println("=".repeat(70));
             System.out.println();
 
-            // Display all games
+
             System.out.println("=".repeat(70));
             System.out.println("ALL GAMES (" + com.example.demo.Game.getAllGames().size() + " entries)");
             System.out.println("=".repeat(70));
@@ -35,7 +35,7 @@ public class Main {
                 System.out.println();
             }
 
-            // Display only GameCopies
+
             System.out.println("=".repeat(70));
             System.out.println("ONLY GAME COPIES (" + GameCopies.getAllGameCopies().size() + " entries)");
             System.out.println("=".repeat(70));
@@ -44,7 +44,7 @@ public class Main {
                 System.out.println();
             }
 
-            // Display only GameRating
+
             System.out.println("=".repeat(70));
             System.out.println("ONLY GAME RATINGS (" + GameRating.getAllRatings().size() + " entries)");
             System.out.println("=".repeat(70));
