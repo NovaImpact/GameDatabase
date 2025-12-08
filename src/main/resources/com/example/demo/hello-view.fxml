@@ -76,7 +76,7 @@
 
             <!-- ==================== RIGHT: DETAILS ==================== -->
             <ScrollPane fitToWidth="true" style="-fx-background-color: #ecf0f1; -fx-background: #ecf0f1;">
-                <VBox spacing="15" style="-fx-padding: 15; -fx-background-color: #525354;">
+                <VBox spacing="15" style="-fx-padding: 15; -fx-background-color: #545b63;">
 
                     <!-- ==================== COVER ART ==================== -->
                     <VBox alignment="CENTER" spacing="12" style="-fx-background-color: white; -fx-border-color: #1865b8; -fx-border-width: 5; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8;">
