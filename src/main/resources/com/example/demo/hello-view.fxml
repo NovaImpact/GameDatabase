@@ -30,7 +30,6 @@
                 <Label style="-fx-font-size: 36px;" />
                 <VBox spacing="3">
                     <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Video Game Data Editor" />
-                    <Label style="-fx-font-size: 13px; -fx-text-fill: #16c79a; -fx-font-style: italic;" text="Manage your best-selling video games database" />
                 </VBox>
             </HBox>
 
@@ -41,7 +40,6 @@
                 <ComboBox fx:id="filterComboBox" prefWidth="180" style="-fx-font-size: 13px;" />
                 <Region HBox.hgrow="ALWAYS" />
                 <Label style="-fx-font-size: 13px; -fx-text-fill: #95a5a6;" text="Total Games: " />
-                <Label style="-fx-font-size: 13px; -fx-text-fill: #16c79a; -fx-font-weight: bold;" text="Loading..." />
             </HBox>
         </VBox>
     </top>
@@ -89,8 +87,8 @@
                         </StackPane>
 
                         <HBox alignment="CENTER" spacing="12">
-                            <Button fx:id="addImageButton" onAction="#handleAddImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="📁 Add Image" />
-                            <Button fx:id="removeImageButton" disable="true" onAction="#handleRemoveImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="🗑 Remove" />
+                            <Button fx:id="addImageButton" onAction="#handleAddImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text=" Add Image" />
+                            <Button fx:id="removeImageButton" disable="true" onAction="#handleRemoveImage" prefHeight="32" prefWidth="120" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text=" Remove" />
                         </HBox>
                     </VBox>
 
