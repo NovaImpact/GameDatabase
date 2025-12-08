@@ -18,14 +18,14 @@ public class HelloApplication extends Application {
 
             Scene scene = new Scene(fxmlLoader.load(), 1400, 800);
 
-            stage.setTitle("Video Game Data Editor - Best Selling Games Database");
+            stage.setTitle("Video Game Data Editor");
             stage.setScene(scene);
             stage.setMinWidth(1000);
             stage.setMinHeight(600);
 
             stage.show();
 
-            System.out.println("Application started successfully!");
+            System.out.println("Application Starts");
 
         } catch (IOException e) {
             System.err.println("Error loading FXML: " + e.getMessage());
