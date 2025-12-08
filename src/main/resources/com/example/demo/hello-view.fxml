@@ -23,7 +23,6 @@
 
 <BorderPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
 
-    <!-- ==================== TOP: HEADER ==================== -->
     <top>
         <VBox spacing="12" style="-fx-background-color: #404040; -fx-padding: 20;">
             <HBox alignment="CENTER_LEFT" spacing="15">
@@ -44,11 +43,9 @@
         </VBox>
     </top>
 
-    <!-- ==================== CENTER: MAIN CONTENT ==================== -->
     <center>
         <SplitPane dividerPositions="0.42" style="-fx-background-color: #ecf0f1;">
 
-            <!-- ==================== LEFT: TABLE ==================== -->
             <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: #d9d5d4;">
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Games Library" />
@@ -74,11 +71,9 @@
                 </HBox>
             </VBox>
 
-            <!-- ==================== RIGHT: DETAILS ==================== -->
             <ScrollPane fitToWidth="true" style="-fx-background-color: #ecf0f1; -fx-background: #ecf0f1;">
                 <VBox spacing="15" style="-fx-padding: 15; -fx-background-color: #545b63;">
 
-                    <!-- ==================== COVER ART ==================== -->
                     <VBox alignment="CENTER" spacing="12" style="-fx-background-color: white; -fx-border-color: #1865b8; -fx-border-width: 5; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8;">
                         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Game Cover Art" />
 
@@ -92,7 +87,6 @@
                         </HBox>
                     </VBox>
 
-                          <!-- ==================== BASIC INFO ==================== -->
                     <VBox prefWidth="764.0" spacing="12" style="-fx-background-color: white; -fx-border-color: #3498db; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
                         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Basic Information" />
 
@@ -126,7 +120,6 @@
                         </GridPane>
                     </VBox>
 
-                    <!-- ==================== GAMECOPIES FIELDS ==================== -->
                     <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #9b59b6; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
                         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="💿 Sales Data (GameCopies)" />
 
@@ -162,7 +155,6 @@
                         </GridPane>
                     </VBox>
 
-                    <!-- ==================== GAMERATING FIELDS ==================== -->
                     <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #e67e22; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
                         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="⭐ Rating Data (GameRating)" />
 
@@ -190,7 +182,6 @@
                         </GridPane>
                     </VBox>
 
-                    <!-- ==================== DETAILS DISPLAY ==================== -->
                     <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #34495e; -fx-border-width: 3; -fx-padding: 18; -fx-background-radius: 8; -fx-border-radius: 8;">
                         <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="📝 Complete Details" />
 
@@ -199,7 +190,6 @@
                         <TextArea fx:id="detailsArea" editable="false" prefHeight="140" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-background-color: #f8f9fa;" wrapText="true" />
                     </VBox>
 
-                    <!-- ==================== ACTION BUTTONS ==================== -->
                     <HBox alignment="CENTER" spacing="15" style="-fx-padding: 15 0 10 0;">
                         <Button fx:id="saveButton" onAction="#handleSave" prefHeight="45" prefWidth="180" style="-fx-background-color: #797a7a; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" text="💾 Save Changes" />
 

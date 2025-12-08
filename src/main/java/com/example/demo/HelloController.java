@@ -334,6 +334,7 @@ public class HelloController {
             return;
         }
 
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Delete");
         confirm.setHeaderText("Delete Game");
