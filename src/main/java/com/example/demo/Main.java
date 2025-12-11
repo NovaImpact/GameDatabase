@@ -1,7 +1,7 @@
 package com.example.demo;
+import java.io.Serializable;
 
-
-public class Main {
+public class Main implements Serializable {
 
     public static void main(String[] args) {
         try {

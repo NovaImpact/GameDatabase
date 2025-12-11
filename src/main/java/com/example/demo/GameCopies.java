@@ -1,12 +1,13 @@
 package com.example.demo;
 
 import java.io.File;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class GameCopies extends com.example.demo.Game {
+public class GameCopies extends com.example.demo.Game implements Serializable {
     private String series;
     private String platforms;
     private int releaseYear;

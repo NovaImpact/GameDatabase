@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.io.File;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import java.util.Locale;
 import java.util.Scanner;
 
 
-public class GameRating extends com.example.demo.Game {
+public class GameRating extends com.example.demo.Game implements Serializable {
+    private static final long serialVersionUID = 2L;
     private String rating;
     private int metascore;
     private String developerPublisher;

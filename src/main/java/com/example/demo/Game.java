@@ -1,15 +1,16 @@
 package com.example.demo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class Game {
+public class Game implements Serializable {
     private int rank;
     private String title;
     private double sales; // in millions
     private LocalDate releaseDate;
-    private String imagePath; // For game cover art
+    private transient String imagePath; // For game cover art
     private static ArrayList<Game> allGames = new ArrayList<>();
 
     public Game(int rank, String title, double sales, LocalDate releaseDate) {
