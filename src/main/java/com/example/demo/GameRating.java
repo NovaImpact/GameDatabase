@@ -126,3 +126,4 @@ public class GameRating extends com.example.demo.Game implements Serializable {
         System.out.println("Loaded " + count + " GameRating entries.");
     }
 }
+//ok
