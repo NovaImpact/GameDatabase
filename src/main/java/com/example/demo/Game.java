@@ -1,11 +1,12 @@
 package com.example.demo;
 
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 public class Game implements Serializable {
+    private static final long serialVersionUID = 2L;
     private int rank;
     private String title;
     private double sales; // in millions
@@ -75,6 +76,29 @@ public class Game implements Serializable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    static void saveData() throws Exception {
+        FileOutputStream fileOut = new FileOutputStream("SavedGameFile");
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        objectOut.writeObject(allGames);
+        objectOut.close();
+        fileOut.close();
+    }
+    public void stop() throws Exception {
+        Game.saveData();
+    }
+
+    static void restoreData() throws Exception {
+        FileInputStream fileIn = new FileInputStream("SavedGameFile");
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+        allGames = (ArrayList<Game>)objectIn.readObject();
+        objectIn.close();
+        fileIn.close();
+    }
+    public void load() throws Exception {
+        Game.restoreData();
+    }
+
 
     @Override
     public String toString() {

@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 
 public class GameCopies extends com.example.demo.Game implements Serializable {
+    private static final long serialVersionUID = 2L;
     private String series;
     private String platforms;
     private int releaseYear;
