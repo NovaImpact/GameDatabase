@@ -58,10 +58,8 @@ public class HelloController {
             System.out.println("INITIALIZING GAME DATA EDITOR");
             System.out.println("=".repeat(50));
 
-            // Try to load serialized data first
             loadSerializedData();
 
-            // If no serialized data exists, load from text files
             if (Game.getAllGames().isEmpty()) {
                 System.out.println("No serialized data found. Loading from text files...");
                 GameCopies.readGameCopiesData();
@@ -306,7 +304,6 @@ public class HelloController {
                 gameRating.setDeveloperPublisher(devPublisherField.getText().trim());
             }
 
-            // Save all data to disk
             saveAllData();
 
             gameTable.refresh();
@@ -341,7 +338,6 @@ public class HelloController {
             gameImageView.setImage(image);
             removeImageButton.setDisable(false);
 
-            // Save data after adding image
             saveAllData();
 
             showSuccess("Success", "Cover art added successfully!");
@@ -355,7 +351,6 @@ public class HelloController {
             gameImageView.setImage(null);
             removeImageButton.setDisable(true);
 
-            // Save data after removing image
             saveAllData();
 
             showSuccess("Success", "Cover art removed successfully!");
@@ -385,7 +380,6 @@ public class HelloController {
                     GameRating.getAllRatings().remove((GameRating) selectedGame);
                 }
 
-                // Save data after deletion
                 saveAllData();
 
                 applyFilter();

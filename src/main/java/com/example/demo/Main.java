@@ -57,7 +57,6 @@ public class Main {
             System.out.println("TESTING SERIALIZATION...");
             System.out.println("=".repeat(70));
 
-            // Save all data
             Game.saveAllGames();
             GameCopies.saveAllGameCopies();
             GameRating.saveAllRatings();

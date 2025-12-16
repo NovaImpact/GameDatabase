@@ -38,7 +38,6 @@ public class GameRating extends Game implements Serializable {
         allRatings.clear();
     }
 
-    // Serialization methods
     public static void saveAllRatings() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(RATINGS_FILE))) {

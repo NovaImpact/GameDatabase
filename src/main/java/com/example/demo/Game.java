@@ -25,7 +25,6 @@ public class Game implements Serializable {
         allGames.add(this);
     }
 
-    // Static collection methods
     public static ArrayList<Game> getAllGames() {
         return allGames;
     }
@@ -38,7 +37,6 @@ public class Game implements Serializable {
         allGames.clear();
     }
 
-    // Serialization methods
     public static void saveAllGames() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(GAMES_FILE))) {
@@ -61,7 +59,6 @@ public class Game implements Serializable {
         }
     }
 
-    // Getters and Setters
     public int getRank() {
         return rank;
     }

@@ -41,7 +41,6 @@ public class GameCopies extends Game implements Serializable {
         allGameCopies.clear();
     }
 
-    // Serialization methods
     public static void saveAllGameCopies() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(COPIES_FILE))) {
@@ -64,7 +63,6 @@ public class GameCopies extends Game implements Serializable {
         }
     }
 
-    // Getters and Setters
     public String getSeries() {
         return series;
     }
@@ -148,7 +146,7 @@ public class GameCopies extends Game implements Serializable {
                 try {
                     releaseYear = Integer.parseInt(parts[5].trim());
                 } catch (NumberFormatException e) {
-                    releaseYear = 2000; // default year
+                    releaseYear = 2000;
                 }
                 String developer = parts[6].trim();
                 String publisher = parts[7].trim();
