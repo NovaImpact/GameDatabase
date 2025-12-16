@@ -44,4 +44,4 @@ public class HelloApplication extends Application {
         launch(args);
     }
 }
-//ok
+//oka
