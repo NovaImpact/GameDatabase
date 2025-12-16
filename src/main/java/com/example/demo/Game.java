@@ -84,6 +84,7 @@ public class Game implements Serializable {
         objectOut.close();
         fileOut.close();
     }
+
     public void stop() throws Exception {
         Game.saveData();
     }
@@ -98,7 +99,7 @@ public class Game implements Serializable {
     public void load() throws Exception {
         Game.restoreData();
     }
-    //game resotring
+    //game restoring
 
 
     @Override

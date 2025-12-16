@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -26,7 +27,6 @@ public class HelloApplication extends Application {
             stage.show();
 
             System.out.println("Application Starts");
-
         } catch (IOException e) {
             System.err.println("Error loading FXML: " + e.getMessage());
             e.printStackTrace();
@@ -35,9 +35,10 @@ public class HelloApplication extends Application {
     }
 
     @Override
-    public void stop() {
-        System.out.println("Application shutting down...");
+    public void stop() {System.out.println("Application shutting down...");
+
     }
+
 
     public static void main(String[] args) {
         launch(args);
