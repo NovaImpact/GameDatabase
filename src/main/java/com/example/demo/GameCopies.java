@@ -1,20 +1,21 @@
 package com.example.demo;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+public class GameCopies extends Game implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class GameCopies extends com.example.demo.Game implements Serializable {
-    private static final long serialVersionUID = 2L;
     private String series;
     private String platforms;
     private int releaseYear;
     private String developer;
     private String publisher;
+
     private static ArrayList<GameCopies> allGameCopies = new ArrayList<>();
+    private static final String COPIES_FILE = "gamecopies.dat";
 
     public GameCopies(int rank, String title, double sales, LocalDate releaseDate,
                       String series, String platforms, int releaseYear,
@@ -38,6 +39,29 @@ public class GameCopies extends com.example.demo.Game implements Serializable {
 
     public static void clearAllGameCopies() {
         allGameCopies.clear();
+    }
+
+    // Serialization methods
+    public static void saveAllGameCopies() throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(COPIES_FILE))) {
+            oos.writeObject(allGameCopies);
+            System.out.println("Saved " + allGameCopies.size() + " game copies to " + COPIES_FILE);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadAllGameCopies() throws IOException, ClassNotFoundException {
+        File file = new File(COPIES_FILE);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    new FileInputStream(COPIES_FILE))) {
+                allGameCopies = (ArrayList<GameCopies>) ois.readObject();
+                System.out.println("Loaded " + allGameCopies.size() + " game copies from " + COPIES_FILE);
+            }
+        } else {
+            System.out.println("No saved game copies file found. Starting fresh.");
+        }
     }
 
     // Getters and Setters
@@ -91,12 +115,9 @@ public class GameCopies extends com.example.demo.Game implements Serializable {
                 " | Publisher: " + publisher;
     }
 
-
-
     public static void readGameCopiesData() throws Exception {
         File file = new File("GameCopiesData");
         Scanner sc = new Scanner(file);
-
 
         if (sc.hasNextLine()) {
             String header = sc.nextLine();
@@ -107,13 +128,11 @@ public class GameCopies extends com.example.demo.Game implements Serializable {
         int count = 0;
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
-
             if (line.trim().isEmpty()) {
                 continue;
             }
 
             String[] parts = line.split("\t");
-
             if (parts.length < 8) {
                 System.out.println("Skipping incomplete line: " + line);
                 continue;
@@ -125,14 +144,12 @@ public class GameCopies extends com.example.demo.Game implements Serializable {
                 double sales = Double.parseDouble(parts[2].trim());
                 String series = parts[3].trim();
                 String platforms = parts[4].trim();
-
                 int releaseYear;
                 try {
                     releaseYear = Integer.parseInt(parts[5].trim());
                 } catch (NumberFormatException e) {
                     releaseYear = 2000; // default year
                 }
-
                 String developer = parts[6].trim();
                 String publisher = parts[7].trim();
 
@@ -141,14 +158,13 @@ public class GameCopies extends com.example.demo.Game implements Serializable {
                 new GameCopies(rank, title, sales, releaseDate, series, platforms,
                         releaseYear, developer, publisher);
                 count++;
-
             } catch (Exception e) {
                 System.out.println("Error parsing line: " + line);
                 System.out.println("Error: " + e.getMessage());
             }
         }
+
         sc.close();
         System.out.println("Loaded " + count + " GameCopies entries.");
     }
 }
-//oka

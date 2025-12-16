@@ -4,15 +4,17 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 public class Game implements Serializable {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
+
     private int rank;
     private String title;
     private double sales; // in millions
     private LocalDate releaseDate;
-    private transient String imagePath; // For game cover art
+    private String imagePath; // For game cover art
+
     private static ArrayList<Game> allGames = new ArrayList<>();
+    private static final String GAMES_FILE = "allgames.dat";
 
     public Game(int rank, String title, double sales, LocalDate releaseDate) {
         this.rank = rank;
@@ -34,6 +36,29 @@ public class Game implements Serializable {
 
     public static void clearAllGames() {
         allGames.clear();
+    }
+
+    // Serialization methods
+    public static void saveAllGames() throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(GAMES_FILE))) {
+            oos.writeObject(allGames);
+            System.out.println("Saved " + allGames.size() + " games to " + GAMES_FILE);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadAllGames() throws IOException, ClassNotFoundException {
+        File file = new File(GAMES_FILE);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    new FileInputStream(GAMES_FILE))) {
+                allGames = (ArrayList<Game>) ois.readObject();
+                System.out.println("Loaded " + allGames.size() + " games from " + GAMES_FILE);
+            }
+        } else {
+            System.out.println("No saved games file found. Starting fresh.");
+        }
     }
 
     // Getters and Setters
@@ -77,34 +102,8 @@ public class Game implements Serializable {
         this.imagePath = imagePath;
     }
 
-    static void saveData() throws Exception {
-        FileOutputStream fileOut = new FileOutputStream("SavedGameFile");
-        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-        objectOut.writeObject(allGames);
-        objectOut.close();
-        fileOut.close();
-    }
-
-    public void stop() throws Exception {
-        Game.saveData();
-    }
-
-    static void restoreData() throws Exception {
-        FileInputStream fileIn = new FileInputStream("SavedGameFile");
-        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-        allGames = (ArrayList<Game>)objectIn.readObject();
-        objectIn.close();
-        fileIn.close();
-    }
-    public void load() throws Exception {
-        Game.restoreData();
-    }
-    //game restoring
-
-
     @Override
     public String toString() {
         return "Rank #" + rank + " \"" + title + "\" - " + sales + "M copies sold, released: " + releaseDate;
     }
 }
-//oka

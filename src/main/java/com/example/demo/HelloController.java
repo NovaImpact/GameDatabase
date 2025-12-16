@@ -5,7 +5,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -13,14 +15,12 @@ import java.time.LocalDate;
  * Handles all UI interactions and data management
  */
 public class HelloController {
-
-
-    @FXML private TableView<com.example.demo.Game> gameTable;
-    @FXML private TableColumn<com.example.demo.Game, Integer> rankColumn;
-    @FXML private TableColumn<com.example.demo.Game, String> titleColumn;
-    @FXML private TableColumn<com.example.demo.Game, Double> salesColumn;
-    @FXML private TableColumn<com.example.demo.Game, LocalDate> releaseDateColumn;
-    @FXML private TableColumn<com.example.demo.Game, String> typeColumn;
+    @FXML private TableView<Game> gameTable;
+    @FXML private TableColumn<Game, Integer> rankColumn;
+    @FXML private TableColumn<Game, String> titleColumn;
+    @FXML private TableColumn<Game, Double> salesColumn;
+    @FXML private TableColumn<Game, LocalDate> releaseDateColumn;
+    @FXML private TableColumn<Game, String> typeColumn;
 
     @FXML private TextField rankField;
     @FXML private TextField titleField;
@@ -38,20 +38,18 @@ public class HelloController {
     @FXML private TextField metascoreField;
     @FXML private TextField devPublisherField;
 
-
     @FXML private ImageView gameImageView;
     @FXML private Button addImageButton;
     @FXML private Button removeImageButton;
-
     @FXML private TextArea detailsArea;
+
     @FXML private Button previousButton;
     @FXML private Button nextButton;
     @FXML private Button saveButton;
     @FXML private Button deleteButton;
     @FXML private ComboBox<String> filterComboBox;
 
-    private com.example.demo.Game selectedGame;
-
+    private Game selectedGame;
 
     @FXML
     public void initialize() {
@@ -60,25 +58,52 @@ public class HelloController {
             System.out.println("INITIALIZING GAME DATA EDITOR");
             System.out.println("=".repeat(50));
 
-            GameCopies.readGameCopiesData();
-            GameRating.readGameRatingData();
+            // Try to load serialized data first
+            loadSerializedData();
 
-            System.out.println("Total Games: " + com.example.demo.Game.getAllGames().size());
+            // If no serialized data exists, load from text files
+            if (Game.getAllGames().isEmpty()) {
+                System.out.println("No serialized data found. Loading from text files...");
+                GameCopies.readGameCopiesData();
+                GameRating.readGameRatingData();
+            }
+
+            System.out.println("Total Games: " + Game.getAllGames().size());
             System.out.println("=".repeat(50));
 
             setupFilterComboBox();
             setupTableColumns();
             setupTableSelectionListener();
             setupImageView();
-
             applyFilter();
 
             if (!gameTable.getItems().isEmpty()) {
                 gameTable.getSelectionModel().select(0);
             }
-
         } catch (Exception e) {
             showError("Initialization Error", "Failed to load game data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSerializedData() {
+        try {
+            Game.loadAllGames();
+            GameCopies.loadAllGameCopies();
+            GameRating.loadAllRatings();
+        } catch (Exception e) {
+            System.out.println("Could not load serialized data: " + e.getMessage());
+        }
+    }
+
+    private void saveAllData() {
+        try {
+            Game.saveAllGames();
+            GameCopies.saveAllGameCopies();
+            GameRating.saveAllRatings();
+            System.out.println("All data saved successfully!");
+        } catch (IOException e) {
+            showError("Save Error", "Failed to save data: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -96,13 +121,13 @@ public class HelloController {
         releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
 
         typeColumn.setCellValueFactory(cellData -> {
-            com.example.demo.Game game = cellData.getValue();
+            Game game = cellData.getValue();
             String type = game instanceof GameCopies ? "Sales Data" :
                     game instanceof GameRating ? "Rating Data" : "Game";
             return new javafx.beans.property.SimpleStringProperty(type);
         });
 
-        salesColumn.setCellFactory(column -> new TableCell<com.example.demo.Game, Double>() {
+        salesColumn.setCellFactory(column -> new TableCell<Game, Double>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -144,12 +169,12 @@ public class HelloController {
                 gameTable.getItems().addAll(GameRating.getAllRatings());
                 break;
             default:
-                gameTable.getItems().addAll(com.example.demo.Game.getAllGames());
+                gameTable.getItems().addAll(Game.getAllGames());
                 break;
         }
     }
 
-    private void displayGameDetails(com.example.demo.Game game) {
+    private void displayGameDetails(Game game) {
         clearAllFields();
 
         rankField.setText(String.valueOf(game.getRank()));
@@ -207,7 +232,7 @@ public class HelloController {
         publisherField.setDisable(true);
     }
 
-    private void displayGameImage(com.example.demo.Game game) {
+    private void displayGameImage(Game game) {
         if (game.getImagePath() != null && !game.getImagePath().isEmpty()) {
             try {
                 File imageFile = new File(game.getImagePath());
@@ -281,10 +306,13 @@ public class HelloController {
                 gameRating.setDeveloperPublisher(devPublisherField.getText().trim());
             }
 
+            // Save all data to disk
+            saveAllData();
+
             gameTable.refresh();
             detailsArea.setText(selectedGame.toString());
-            showSuccess("Success", "Game data saved successfully!");
 
+            showSuccess("Success", "Game data saved successfully!");
         } catch (NumberFormatException e) {
             showError("Invalid Input", "Please enter valid numbers for numeric fields.");
         } catch (Exception e) {
@@ -312,6 +340,10 @@ public class HelloController {
             Image image = new Image(selectedFile.toURI().toString());
             gameImageView.setImage(image);
             removeImageButton.setDisable(false);
+
+            // Save data after adding image
+            saveAllData();
+
             showSuccess("Success", "Cover art added successfully!");
         }
     }
@@ -322,6 +354,10 @@ public class HelloController {
             selectedGame.setImagePath(null);
             gameImageView.setImage(null);
             removeImageButton.setDisable(true);
+
+            // Save data after removing image
+            saveAllData();
+
             showSuccess("Success", "Cover art removed successfully!");
         }
     }
@@ -333,7 +369,6 @@ public class HelloController {
             return;
         }
 
-
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Delete");
         confirm.setHeaderText("Delete Game");
@@ -342,12 +377,17 @@ public class HelloController {
 
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                com.example.demo.Game.getAllGames().remove(selectedGame);
+                Game.getAllGames().remove(selectedGame);
+
                 if (selectedGame instanceof GameCopies) {
                     GameCopies.getAllGameCopies().remove((GameCopies) selectedGame);
                 } else if (selectedGame instanceof GameRating) {
                     GameRating.getAllRatings().remove((GameRating) selectedGame);
                 }
+
+                // Save data after deletion
+                saveAllData();
+
                 applyFilter();
                 showSuccess("Deleted", "Game deleted successfully!");
             }

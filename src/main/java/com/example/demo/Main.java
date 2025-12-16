@@ -1,8 +1,6 @@
 package com.example.demo;
-import java.io.Serializable;
 
-public class Main implements Serializable {
-
+public class Main {
     public static void main(String[] args) {
         try {
             System.out.println("=".repeat(70));
@@ -10,31 +8,34 @@ public class Main implements Serializable {
             System.out.println("=".repeat(70));
             System.out.println();
 
+            System.out.println("Attempting to load serialized data...");
+            try {
+                Game.loadAllGames();
+                GameCopies.loadAllGameCopies();
+                GameRating.loadAllRatings();
+            } catch (Exception e) {
+                System.out.println("No serialized data found. Loading from text files...");
+                GameCopies.readGameCopiesData();
+                GameRating.readGameRatingData();
+            }
 
-            System.out.println("Loading data files...");
-            GameCopies.readGameCopiesData();
-            GameRating.readGameRatingData();
             System.out.println();
-
-
             System.out.println("=".repeat(70));
             System.out.println("DATA LOADING SUMMARY");
             System.out.println("=".repeat(70));
-            System.out.println("Total Games:        " + com.example.demo.Game.getAllGames().size());
+            System.out.println("Total Games:        " + Game.getAllGames().size());
             System.out.println("GameCopies Entries: " + GameCopies.getAllGameCopies().size());
             System.out.println("GameRating Entries: " + GameRating.getAllRatings().size());
             System.out.println("=".repeat(70));
             System.out.println();
 
-
             System.out.println("=".repeat(70));
-            System.out.println("ALL GAMES (" + com.example.demo.Game.getAllGames().size() + " entries)");
+            System.out.println("ALL GAMES (" + Game.getAllGames().size() + " entries)");
             System.out.println("=".repeat(70));
-            for (com.example.demo.Game game : com.example.demo.Game.getAllGames()) {
+            for (Game game : Game.getAllGames()) {
                 System.out.println(game);
                 System.out.println();
             }
-
 
             System.out.println("=".repeat(70));
             System.out.println("ONLY GAME COPIES (" + GameCopies.getAllGameCopies().size() + " entries)");
@@ -43,7 +44,6 @@ public class Main implements Serializable {
                 System.out.println(game);
                 System.out.println();
             }
-
 
             System.out.println("=".repeat(70));
             System.out.println("ONLY GAME RATINGS (" + GameRating.getAllRatings().size() + " entries)");
@@ -54,6 +54,16 @@ public class Main implements Serializable {
             }
 
             System.out.println("=".repeat(70));
+            System.out.println("TESTING SERIALIZATION...");
+            System.out.println("=".repeat(70));
+
+            // Save all data
+            Game.saveAllGames();
+            GameCopies.saveAllGameCopies();
+            GameRating.saveAllRatings();
+
+            System.out.println("Data saved successfully!");
+            System.out.println("=".repeat(70));
             System.out.println("TEST COMPLETED SUCCESSFULLY!");
             System.out.println("=".repeat(70));
 
@@ -63,4 +73,3 @@ public class Main implements Serializable {
         }
     }
 }
-//oka

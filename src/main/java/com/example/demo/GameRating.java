@@ -1,20 +1,21 @@
 package com.example.demo;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+public class GameRating extends Game implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class GameRating extends com.example.demo.Game implements Serializable {
-    private static final long serialVersionUID = 2L;
     private String rating;
     private int metascore;
     private String developerPublisher;
+
     private static ArrayList<GameRating> allRatings = new ArrayList<>();
+    private static final String RATINGS_FILE = "gameratings.dat";
 
     public GameRating(int rank, String title, double sales, LocalDate releaseDate,
                       String rating, int metascore, String developerPublisher) {
@@ -35,6 +36,29 @@ public class GameRating extends com.example.demo.Game implements Serializable {
 
     public static void clearAllRatings() {
         allRatings.clear();
+    }
+
+    // Serialization methods
+    public static void saveAllRatings() throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(RATINGS_FILE))) {
+            oos.writeObject(allRatings);
+            System.out.println("Saved " + allRatings.size() + " game ratings to " + RATINGS_FILE);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadAllRatings() throws IOException, ClassNotFoundException {
+        File file = new File(RATINGS_FILE);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    new FileInputStream(RATINGS_FILE))) {
+                allRatings = (ArrayList<GameRating>) ois.readObject();
+                System.out.println("Loaded " + allRatings.size() + " game ratings from " + RATINGS_FILE);
+            }
+        } else {
+            System.out.println("No saved game ratings file found. Starting fresh.");
+        }
     }
 
     public String getRating() {
@@ -80,17 +104,15 @@ public class GameRating extends com.example.demo.Game implements Serializable {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.US);
-
         int count = 0;
+
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
-
             if (line.trim().isEmpty()) {
                 continue;
             }
 
             String[] parts = line.split("\t");
-
             if (parts.length < 6) {
                 System.out.println("Skipping incomplete line: " + line);
                 continue;
@@ -99,31 +121,27 @@ public class GameRating extends com.example.demo.Game implements Serializable {
             try {
                 int rank = Integer.parseInt(parts[0].trim());
                 String title = parts[1].trim();
-
                 LocalDate date;
                 try {
                     date = LocalDate.parse(parts[2].trim(), formatter);
                 } catch (Exception e) {
-
                     date = LocalDate.of(2000, 1, 1);
                 }
 
                 String ratingStr = parts[3].trim();
                 int metascore = Integer.parseInt(parts[4].trim());
                 String developerPublisher = parts[5].trim();
-
                 double sales = 0.0;
 
                 new GameRating(rank, title, sales, date, ratingStr, metascore, developerPublisher);
                 count++;
-
             } catch (Exception e) {
                 System.out.println("Error parsing line: " + line);
                 System.out.println("Error: " + e.getMessage());
             }
         }
+
         sc.close();
         System.out.println("Loaded " + count + " GameRating entries.");
     }
 }
-//ok
